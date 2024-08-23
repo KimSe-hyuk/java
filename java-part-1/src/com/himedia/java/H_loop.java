@@ -1,4 +1,4 @@
-package com.himedia.practice;
+package com.himedia.java;
 
 import java.util.Scanner;
 

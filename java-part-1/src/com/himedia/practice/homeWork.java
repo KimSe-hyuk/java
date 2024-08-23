@@ -1,6 +1,6 @@
 package com.himedia.practice;
 
-public class test {
+public class homeWork {
     public static void main(String[] args) {
         /*Java는 JVM(자바 가상 머신, Java Virtual Machine)을 사용하여 운영체제와 독립적으로 동작할 수 있는 언어로, 어느 운영체제에서나 같은 형태로 실행될 수 있는 객체 지향 언어입니다.
 
@@ -34,5 +34,8 @@ public class test {
         8. 동적 로딩 지원
         자바로 작성된 프로그램은 여러 클래스로 구성되어 있는데, 실행 시에 모든 클래스가 로딩되는 것이 아닌, 프로그램 실행 중 필요한 시점에 클래스를 로딩하여 사용할 수 있다는 장점이 있습니다.
     */
+
+        /*asdd*/
+
     }
 }

@@ -118,19 +118,67 @@ public class K_member_management {
         Scanner sc = new Scanner(System.in);
         System.out.println("[삭제] 이메일을 입력하세요.");
         String email = sc.nextLine();
+
         for (int i = 0; i < totalMemberCnt; i++) {
             if (email.equals(members[i][1])) {
-                for(int j=0;j<3;j++){
-                    members[i][j]=members[totalMemberCnt-1][j];
-                    members[totalMemberCnt-1][j]=null;
+                for (int j = i; j < totalMemberCnt - 1; j++) {
+                    for (int h = 0; h < 3; h++) {
+                        members[j][h] = members[j + 1][h];
+                    }
                 }
-
+                for (int h = 0; h < 3; h++) {
+                    members[totalMemberCnt-1][h] = null;
+                }
                 totalMemberCnt--;
                 System.out.println("삭제 완료");
                 return;
             }
         }
-        System.out.println("이메일이 없습니다.");
+        System.out.println("찾으시는 회원이 없습니다.");
+    }
+
+    public  static  void updateMember(String[][] members){
+        // 1 . 이메일 조회 -> 사용자로붜 이메일을 받아온다.
+        // 2. 조회
+        // 3. 찾았으면 해당 인덱스 값을 가지고 있는다.
+        // 3-1. 찾지 못했으면 "찾으시는 회원이 없습니다"를 출력후 함수 종료
+        // 4. 새로운 이름 , 이메일 연락처 입력받는다.
+        // 5. 찾은 인덱스에 값을 갱신 시켜준다.
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[수정] 이메일을 입력하세요.");
+        String emailCheck = sc.nextLine();
+        int idx = -1;
+        for (int i = 0; i < totalMemberCnt; i++) {
+            if (emailCheck.equals(members[i][1])) {
+               idx=i;
+               break;
+            }
+        }
+        if(idx == -1){
+            System.out.println("찾으시는 회원이 없습니다.");
+            return;
+        }else {
+            System.out.println("변경할 이름을 입력하세요.");
+            String name = sc.nextLine();
+            System.out.println("변경할 이메일을 입력하세요.");
+            String email = sc.nextLine();
+            System.out.println("변경할 연락처를 입력하세요");
+            String phone = sc.nextLine();
+
+            // -> 예외처리2
+            // 이메일 체크 필요
+
+            if (checkEmail(members, email)) {
+                System.out.println("이미 존재하는 회원입니다.");
+                return;
+            }
+
+            members[idx][0] = name;
+            members[idx][1] = email;
+            members[idx][2] = phone;
+
+            System.out.println("수정이 완료되었습니다.");
+        }
     }
     public static void main(String[] args) {
         // 사용자로부터 요금제 선택을 받아서
@@ -157,6 +205,7 @@ public class K_member_management {
                     selectAll(members);
                     break;
                 case 5:
+                    updateMember(members);
                     break;
                 case 6:
                     deleteMember(members);

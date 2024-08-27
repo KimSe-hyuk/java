@@ -1,8 +1,7 @@
-package com.himedia.java;
-
+package com.himedia.practice;
 import java.util.Scanner;
 
-public class K_member_management {
+public class K_membermanagement {
 
     //총 인원
     static int totalCnt =0;
@@ -135,9 +134,9 @@ public class K_member_management {
 
 
         for (int i = idx; i < members.length-1; i++) {
-                members[i][0] = members[i+1][0];
-                members[i][1] = members[i+1][1];
-                members[i][2] = members[i+1][2];
+            members[i][0] = members[i+1][0];
+            members[i][1] = members[i+1][1];
+            members[i][2] = members[i+1][2];
         }
         System.out.println("이메일"+email+"삭제 완료");
 
@@ -173,8 +172,8 @@ public class K_member_management {
         int idx = -1;
         for (int i = 0; i < totalMemberCnt; i++) {
             if (emailCheck.equals(members[i][1])) {
-               idx=i;
-               break;
+                idx=i;
+                break;
             }
         }
         if(idx == -1){
@@ -242,5 +241,4 @@ public class K_member_management {
 
         }
     }
-
 }

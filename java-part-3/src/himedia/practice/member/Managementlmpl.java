@@ -71,7 +71,7 @@ public class Managementlmpl implements Member{
             System.out.println("요금제를 변경하시오.");
             return;
         }
-        member.put(mail,new String[]{name, phone});
+        member.put(mail, Arrays.toString(new String[]{name, phone}));
         memberCount=memberCount+1;
     }
 

@@ -38,6 +38,31 @@ class A_person {
     }
 }
 
+class Graph{
+    private LinkedList<Integer>[] graphList;
+
+    public Graph(int vertexCount) {
+        //Linkedlist 배열 칸 만든것 0은 안써서
+        this.graphList = new LinkedList[vertexCount+1];
+
+        // 각 인접리스트 초기화
+        for (int i = 0; i < graphList.length; i++) {
+            //가변
+            graphList[i] = new LinkedList<>();
+        }
+    }
+
+    //간선 추가
+    public void addEdge(int v, int w){
+        graphList[v].add(w);
+        graphList[w].add(v);
+    }
+
+    public LinkedList<Integer>[] getGraphList() {
+        return graphList;
+    }
+}
+
 public class A_collections_queue {
 
     // 1. LinkedList
@@ -227,6 +252,7 @@ public class A_collections_queue {
     // 3. ArrayQueue
     // - ArrayQueue는 큐와 덱(Deque, 양방향 큐) 으로 사용할 수 있는 매우 효율적인 클래스이다.
     // - 고정된 크기의 배열 기반으로 동작하지 않고, 필요에 따라 크기가 자동으로 조정된다.
+
     public static void exam3() {
         Queue<String> arrayQueue = new PriorityQueue<>();
 
@@ -239,9 +265,51 @@ public class A_collections_queue {
         System.out.println("Peek : " + arrayQueue.peek());
 
         // Poll : 큐에서 요소 제거 및 반환
+
         System.out.println("Poll : " + arrayQueue.poll());
+
+        // 나머지 동일...
     }
+
+    public static void exam4(){
+        //인접 리스트
+        boolean[] visited = new boolean[9+1];// 기본형 boolean 은 전부 false
+
+        Graph graph= new Graph(9);
+        graph.addEdge(1,2);
+        graph.addEdge(1,3);
+        graph.addEdge(2,3);
+        graph.addEdge(2,4);
+        graph.addEdge(2,6);
+        graph.addEdge(3,7);
+        graph.addEdge(4,5);
+        graph.addEdge(4,7);
+        graph.addEdge(5,6);
+        graph.addEdge(7,8);
+        graph.addEdge(8,9);
+
+        // 탐색 -> BFS
+        int startVertex = 1;//정점
+        //대기열
+        Queue<Integer> queue = new LinkedList<>();
+        visited[startVertex] = true;
+        queue.add(startVertex);
+
+        while (queue.size() > 0) {
+            int vertex = queue.poll();
+            System.out.print(vertex + " -> ");
+            //현재 정점의 인접 정점들중 방문하지 않은 정점을 모두 큐에 추가
+            for (int w:graph.getGraphList()[vertex]){
+                if(!visited[w]){
+                    queue.add(w);
+                    visited[w] = true;
+                }
+            }
+        }
+    }
+
+
     public static void main(String[] args) {
-        exam2_3();
+        exam4();
     }
 }

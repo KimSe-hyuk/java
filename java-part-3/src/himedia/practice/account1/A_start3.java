@@ -1,4 +1,4 @@
-package himedia.java.account1;
+package himedia.practice.account1;
 
 public class A_start3 {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package himedia.java.account1;
+package himedia.practice.account1;
 
 public interface A_account {
     void makeAccount();

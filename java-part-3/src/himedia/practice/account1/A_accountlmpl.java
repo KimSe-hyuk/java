@@ -1,9 +1,10 @@
-package himedia.java.account1;
+package himedia.practice.account1;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class A_accountlmpl implements A_account {
@@ -67,7 +68,10 @@ public class A_accountlmpl implements A_account {
 
     @Override
     public void historyInquiry() {
-        Collections.reverse(history);
+        history.sort(Comparator.reverseOrder());
+        //Collections.reverse(history);
+//        Comparator.reverseOrder(): 내림차순 정렬을 수행합니다.
+//                Collections.reverse(history): 현재 순서를 반전시킵니다.
         for (String a : history) {
             System.out.println(a);
         }

@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class AccountBooklmpl implements AccountBook {
-    Map<String,List<String>> accounts;
+    Map<String,List<String[]>> accounts;
     public AccountBooklmpl() {
         this.accounts = new HashMap<>();
     }
@@ -26,26 +26,25 @@ public class AccountBooklmpl implements AccountBook {
     public void AccountBookPlus() {
         Scanner sc = new Scanner(System.in);
         int sum = 0;
-        List<String> accountList = new ArrayList<>();
+        List<String[]> accountList = new ArrayList<>();
         while(true) {
             System.out.println("가계부에 추가할 물품과 가격을 입력하시오 ");
             System.out.println("stop 입력할시 종료");
             System.out.print("물품 : ");
             String name = sc.nextLine();
 
-            if (name.equals("stop")) {
-                accountList.add( "합계 : "+sum);
-                accounts.put(dateFormat(), accountList);
-                System.out.println("종료");
-                break;
-            } else {
-
+            if (!name.equals("stop")) {
                 System.out.print("가격 : ");
 
                 int price = sc.nextInt();
                 sc.nextLine();
                 sum += price;
-                accountList.add(name + " : " + price);
+                accountList.add(new String[]{name,Integer.toString(price)});
+            } else {
+                accountList.add(new String[]{"합계", String.valueOf(sum)});
+                accounts.put(dateFormat(), accountList);
+                System.out.println("종료");
+                break;
             }
         }
     }
@@ -68,7 +67,8 @@ public class AccountBooklmpl implements AccountBook {
             if(name.equals(date)){
                 System.out.println(name);
                 for (int i = 0; i < accounts.get(name).size(); i++) {
-                    System.out.println(accounts.get(name).get(i));
+                    System.out.println(accounts.get(name).get(i)[0]+" : "+accounts.get(name).get(i)[1]+"원");;
+
                 }
                 return;
             }
@@ -91,35 +91,31 @@ public class AccountBooklmpl implements AccountBook {
 
     @Override
     public void AccountBookdel() {
+        List<String[]> accountList = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         System.out.println("삭제할 내역을 입력하시오");
-        String a = sc.nextLine();
+        String findName = sc.nextLine();
         if(accounts.isEmpty()){
             System.out.println("배열 없음");
             return;
         }
-        for(String name : accounts.keySet()){
-
+        for(String name : accounts.keySet()) {
             for (int i = 0; i < accounts.get(name).size(); i++) {
-                String[] split = accounts.get(name).get(i).split(":");
-                for (int j = 0; j < split.length; j++) {
-                     String check = accounts.get(name).get(i).split(":")[j].strip();
-                    if(a.equals(check)){
-                        int s = Integer.parseInt(split[j+1].strip());
-                        int sum = Integer.parseInt(split[split.length-1].strip());
-
-                        List<String> list = accounts.get(name);
-                        list.add("합계 : "+Integer.toString(sum-s));
-                        accounts.get(name).remove(split.length-1);
-                        accounts.put(name ,list);
-                        accounts.get(name).remove(i);
-
-                        System.out.println("삭제됨");
-                    }
+                if (findName.equals(accounts.get(name).get(i)[0])) {
+                    int sum = Integer.parseInt(accounts.get(name).getLast()[1]);
+                    int minus = Integer.parseInt(accounts.get(name).get(i)[1]);
+                    accounts.get(name).remove(i);
+                    accounts.get(name).removeLast();
+                    accountList = new ArrayList<>(accounts.get(name));
+                    accountList.add(new String[]{"합계", Integer.toString(sum - minus)});
+                    accounts.put(name, accountList);
+                    System.out.println("삭제 완료");
+                    return;
                 }
             }
-        }
 
+        }
+        System.out.println("날짜가 없습니다.");
 
     }
 }

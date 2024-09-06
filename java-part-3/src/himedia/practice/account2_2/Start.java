@@ -1,5 +1,7 @@
 package himedia.practice.account2_2;
 
+import java.util.Scanner;
+
 /*
 1. 가계부 내역 추가
 ->  오늘 날짜의 파일(.txt)이 없으면 자동으로 생성한다.
@@ -18,4 +20,28 @@ package himedia.practice.account2_2;
 5. 프로그램종료
  */
 public class Start {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        AccountBook accountBook = new AccountBooklmpl();
+        ((AccountBooklmpl) accountBook).makeForder();
+        while (true){
+            switch ( accountBook.menuPrint()){
+                case 1:
+                    accountBook.AccountBookPlus();
+                    break;
+                case 2:
+                    accountBook.AccountBookList();
+                    break;
+                case 3:
+                    accountBook.AccountBookAllDel();
+                    break;
+                case 4:
+                    System.out.println("종료");
+                    return;
+                default:
+                    System.out.println("잘못 누름");
+                    break;
+            }
+        }
+    }
 }

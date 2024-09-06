@@ -36,7 +36,7 @@ public class D_input_output_stream {
                 Files.createDirectories(myFolder);
                 System.out.println("폴더가 성공적으로 생성되었습니다.");
             } else {
-                System.out.println("파일이 이미 존재합니다.");
+                System.out.println("폴더가 이미 존재합니다.");
             }
         }catch (IOException e) {
             throw new RuntimeException(e);

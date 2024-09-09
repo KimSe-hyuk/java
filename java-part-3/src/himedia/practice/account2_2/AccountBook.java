@@ -5,4 +5,5 @@ public interface AccountBook {
     void AccountBookList();
     void AccountBookAllDel();
     int menuPrint();
+    void writeTxt(boolean replace);
 }

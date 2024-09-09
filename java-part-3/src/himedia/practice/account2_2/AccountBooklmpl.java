@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.concurrent.TimeUnit;
 
 
 public class AccountBooklmpl implements AccountBook {
@@ -47,7 +48,6 @@ public class AccountBooklmpl implements AccountBook {
     @Override
     public void AccountBookPlus() {
         today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        int sum =0;
         todayFile = myFolder.resolve(today+".txt");
         if ( Files.notExists(todayFile) ) {
             System.out.println("파일 시작");
@@ -57,50 +57,67 @@ public class AccountBooklmpl implements AccountBook {
             writeTxt(true);
         }
     }
-    void writeTxt(boolean replace){
-        StringBuilder sb=new StringBuilder();
+    @Override
+    public void writeTxt(boolean replace) {
+        StringBuilder sb = new StringBuilder();
         Scanner sc = new Scanner(System.in);
-        int sum =0;
-        todayFile = myFolder.resolve(today + ".txt");
+        int sum = 0;
+        Path todayFile = myFolder.resolve(today + ".txt");
 
-        try ( FileOutputStream fos = new FileOutputStream(todayFile.toFile() )) {
-            if(replace) {
-
-                todayFile = myFolder.resolve(today+".txt");
-                BufferedReader br = new BufferedReader(new FileReader(String.valueOf(todayFile)));
-                String[] str = br.readLine().split(":");
-                for (int i = 0; i < str.length-2; i=i+2) {
-                    sb.append(str[i]).append(" : ").append(str[i+1]).append("\n");
-                    sum+=Integer.parseInt(str[i+1]);
+        if (replace) {
+            boolean fileDeleted = false;
+            while (!fileDeleted) {
+                try {
+                    // 파일이 열려 있지 않으면 삭제 시도
+                    if (Files.exists(todayFile)) {
+                        try (BufferedReader br = new BufferedReader(new FileReader(todayFile.toFile()))) {
+                            String line = br.readLine();
+                            if (line != null) {
+                                String[] str = line.split(":");
+                                for (int i = 0; i < str.length - 1; i += 2) {
+                                    sb.append(str[i]).append(" : ").append(str[i + 1]).append("\n");
+                                    sum += Integer.parseInt(str[i + 1].strip());
+                                }
+                            }
+                        }
+                        Files.delete(todayFile); // 파일 삭제
+                    }
+                    fileDeleted = true; // 파일 삭제 성공
+                } catch (IOException e) {
+                    System.err.println("파일 처리 중 오류가 발생했습니다1: " + e.getMessage());
+                    try {
+                        TimeUnit.SECONDS.sleep(1); // 1초 대기 후 재시도
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        System.err.println("스레드 인터럽트 발생: " + ie.getMessage());
+                        return;
+                    }
                 }
-                sb.append("합계").append(" : ").append(sum);
-                fos.write(sb.toString().getBytes());
-                System.out.println(today+".txt 파일을 수정하고 내용을 썼습니다.");
+            }
+        }
 
+        // 새 데이터 입력
+        try (FileOutputStream fos = new FileOutputStream(todayFile.toFile())) {
+            while (true) {
+                System.out.println("종료를 원할 시 'stop' 입력");
+                System.out.print("이름 입력 : ");
+                String name = sc.nextLine();
+                if (name.equals("stop")) break;
+                System.out.print("가격 입력 : ");
+                int price = sc.nextInt();
+                sc.nextLine(); // 개행 문자 처리
+                sum += price;
+                sb.append(name).append(" : ").append(price).append("\n");
             }
 
-                while (true){
-                    System.out.println("종료를 원할시 stop 입력");
-                    System.out.println("이름 입력 : ");
-                    String name = sc.nextLine();
-                    if(name.equals("stop"))break;
-                    System.out.println("가격 입력 : ");
-                    int price = sc.nextInt();
-                    sc.nextLine();
-                    sum+=price;
-                    sb.append(name).append(" : ").append(price).append("\n");
-                }
-
-            sb.append("합계").append(" : ").append(sum);
+            sb.append("합계 : ").append(sum);
             fos.write(sb.toString().getBytes());
-            System.out.println(today+".txt 파일을 생성하고 내용을 썼습니다.");
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println(today + ".txt 파일을 생성하고 내용을 썼습니다.");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("파일 처리 중 오류가 발생했습니다2: " + e.getMessage());
         }
     }
+
     @Override
     public void AccountBookAllDel() {
         Scanner sc =new Scanner(System.in);

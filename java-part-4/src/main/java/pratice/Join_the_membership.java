@@ -52,9 +52,7 @@ public class Join_the_membership implements Join_Mem{
                 ){
             preparedStatement.setString(1,userId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                return true;
-            }return false;
+            return resultSet.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

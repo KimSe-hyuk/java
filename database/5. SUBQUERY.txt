@@ -1,0 +1,77 @@
+* 서브쿼리 : 서브쿼리는 SQL문을 실행하는데 필요한 데이터를 추가로 조회하기 위해 SQL문 내부에서 사용하는 SELCT 문을 의미한다.
+
+- 조건절에서의 서브쿼리
+1. 사원 이름이 JONES인 사원의 급여 출력
+SELECT
+	SAL
+FROM
+	EMP
+WHERE 
+	ENAME = 'JONES'
+2. 급여가 2975보다 높은 사원 정보를 출력
+SELECT
+	ENAME
+FROM
+	EMP
+WHERE 
+	SAL > 2975
+-> 1+2 JONES의 급여보다 높은 급여를 받은 사원 정보 출력
+SELECT
+	*
+FROM 
+	EMP
+WHERE
+	SAL>(select sal from emp where ename='JONES');
+
+문제) 
+1)'ALLEN'의 직무와 같은 사람의 이름, 부서명, 급여, 직무를 출력하시오.
+SELECT
+    e.ENAME, d.DNAME, e.SAL, e.JOB
+FROM
+    EMP e , dept d 
+WHERE
+    e.DEPTNO = d.DEPTNO    
+AND 
+    JOB=(select job from emp where ename='ALLEN')
+2)전체 사원의 평균임금보다 많은 사원의 사원번호, 이름, 부서명, 입사일, 지역, 급여를 출력하시오.
+SELECT
+    e.EMPNO, e.ENAME, d.DNAME, e.HIREDATE,d.LOC, e.SAL
+FROM
+    EMP e JOIN dept d ON e.DEPTNO = d.DEPTNO
+WHERE
+    SAL>(select avg(SAL) from emp);
+3)EMP테이블과 DEPT테이블에서 부서번호가 20이며, 부서번호가 일치하고, EMP평균 연봉보다 높은 직원들을 출력하시오.
+SELECT
+    *
+FROM
+    EMP e ,DEPT d
+WHERE
+    e.DEPTNO = 20
+AND
+    e.DEPTNO = d.DEPTNO
+AND
+    e.SAL > (SELECT avg(SAL) FROM emp);
+4)각 부서별 최고 급여와 동일한 급여를 받는 사원 정보를 출력하시오.
+select
+    *
+from emp
+where
+    SAL IN(select max(sal) from emp group by deptno);
+
+-FROM절에서의 서브쿼리 사용 
+SELECT
+	E10.ENAME, D.DNAME
+FROM
+	(select * from emp WHERE deptno = 10) E10,
+	(select * from dept) d
+WHERE
+	E10.DEPTNO = D.DEPTNO
+
+-SELECT절에서의 서브쿼리
+SELECT
+    EMPNO, ENAME, JOB, SAL,
+    (select grade from salgrade where e.sal between losal and hisal) as SALGRADE,
+    DEPTNO,
+    (select dname from dept where e.deptno = dept.deptno) AS DEPT
+FROM
+    EMP e;

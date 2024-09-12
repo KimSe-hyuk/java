@@ -219,7 +219,7 @@ SELECT COUNT(*) FROM emp;
 * MAX(), MIN() 함수
 SELECT MAX(SAL) FROM EMP;
 SELECT MIN(SAL) FROM EMP;
-* ACG()함수
+* AVG()함수
 SELECT AVG(SAL) FROM EMP;
 
 문제)입사일이 (Hhiredate)'80-12-17'이상인 데이터 조회

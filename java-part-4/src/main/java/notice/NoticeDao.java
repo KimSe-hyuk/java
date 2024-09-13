@@ -19,9 +19,7 @@ public class NoticeDao {
             Connection connection= DriverManager.getConnection(url,user,password);
             System.out.println("Conn success!");
             return connection;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -30,7 +28,7 @@ public class NoticeDao {
 
         try (
                 Connection conn = connection();
-                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                PreparedStatement preparedStatement = conn.prepareStatement(query)
         ) {
             preparedStatement.setString(1, id);
             preparedStatement.setString(2, password);
@@ -52,7 +50,7 @@ public class NoticeDao {
         String query = "select * from user where id=?";
         try (
                 Connection conn = connection();
-                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                PreparedStatement preparedStatement = conn.prepareStatement(query)
         ){
             preparedStatement.setString(1, id);
             ResultSet rs = preparedStatement.executeQuery();
@@ -66,7 +64,7 @@ public class NoticeDao {
         String query = "Insert into user(id,pw,email,date) values(?,?,?,?)";
         try (
                 Connection conn = connection();
-                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                PreparedStatement preparedStatement = conn.prepareStatement(query)
         ){
             preparedStatement.setString(1,id);
             preparedStatement.setString(2,pw);
@@ -87,7 +85,7 @@ public class NoticeDao {
         try (
                 Connection conn = connection();
                 PreparedStatement preparedStatement = conn.prepareStatement(query);
-                PreparedStatement preparedStatement2 = conn.prepareStatement(query2);
+                PreparedStatement preparedStatement2 = conn.prepareStatement(query2)
         ){
             preparedStatement.setInt(1, userID);
             preparedStatement2.setInt(1,userID);
@@ -106,7 +104,7 @@ public class NoticeDao {
         String query = "select * from content";
         try (
                 Connection conn = connection();
-                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                PreparedStatement preparedStatement = conn.prepareStatement(query)
         ){
             ResultSet rs =preparedStatement.executeQuery();
             while(rs.next()){
@@ -125,7 +123,7 @@ public class NoticeDao {
         String query = "insert into content(userID,Contents,Date) values(?,?,?)";
         try(
                 Connection conn = connection();
-                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                PreparedStatement preparedStatement = conn.prepareStatement(query)
         ){
             preparedStatement.setInt(1,userID);
             preparedStatement.setString(2, content);
@@ -149,7 +147,7 @@ public class NoticeDao {
             String query = "update content set Contents=?,Date=?  where ContentID=?";
             try(
                     Connection conn = connection();
-                    PreparedStatement preparedStatement = conn.prepareStatement(query);
+                    PreparedStatement preparedStatement = conn.prepareStatement(query)
             ){
                 preparedStatement.setString(1, content);
                 preparedStatement.setString(2,date);
@@ -170,7 +168,7 @@ public class NoticeDao {
         ArrayList<String> ContentId = new ArrayList<>();
         try (
                 Connection conn = connection();
-                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                PreparedStatement preparedStatement = conn.prepareStatement(query)
         ){
             preparedStatement.setInt(1,userID);
             ResultSet rs = preparedStatement.executeQuery();
@@ -192,7 +190,7 @@ public class NoticeDao {
             String query = "DELETE FROM content where ContentID = ?";
             try(
                     Connection conn = connection();
-                    PreparedStatement preparedStatement = conn.prepareStatement(query);
+                    PreparedStatement preparedStatement = conn.prepareStatement(query)
             ){
                 preparedStatement.setString(1, id);
 

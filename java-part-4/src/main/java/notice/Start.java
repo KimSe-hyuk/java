@@ -6,15 +6,17 @@ CREATE DATABASE Notice
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 User 테이블-> 회원정보
+//    id BIGINT AUTO_INCREMENT PRIMARY KEY ,
+//    datetime DATETIME DEFAULT CURRENT_TIMESTAMP
 CREATE TABLE user (
-                     userID int(10)NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                     userID int(10) AUTO_INCREMENT PRIMARY KEY,
                      Id VARCHAR(10) NOT NULL,
                      Pw VARCHAR(10) NOT NULL,
                      Email VARCHAR(20),
                      Date DATE
 );
 CREATE TABLE content (
-                      ContentID int(10)NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                      ContentID int(10) AUTO_INCREMENT PRIMARY KEY,
                       Userid int(10),
                       Contents VARCHAR(10) NOT NULL,
                       Date VARCHAR(10) NOT NULL

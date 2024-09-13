@@ -26,8 +26,8 @@ public class Noticelmpl implements Notice {
     }
 
     @Override
-    public int printMenu() {
-        Scanner sc = new Scanner(System.in);
+    public int printMenu() {        Scanner sc = new Scanner(System.in);
+        System.out.println(status?userName:" 로그인하시오");
         System.out.println("1. login 2. joinMembership " +
                 "3. postList 4. addPost 5. editPost 6. delPost " +
                 "7. logOut 8. delUser 9. end");
@@ -36,7 +36,7 @@ public class Noticelmpl implements Notice {
 
     @Override
     public void login() {
-        if(new NoticeDto().getStatus()){
+        if(!status){
             System.out.println("login successful");
             return;
         }
@@ -126,6 +126,4 @@ public class Noticelmpl implements Notice {
         status=false;
         System.out.println("log out");
     }
-
-
 }

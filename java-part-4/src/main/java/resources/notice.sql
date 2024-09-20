@@ -2,7 +2,7 @@ CREATE DATABASE notice
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE user (
+CREATE TABLE user2 (
                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
                       user_id VARCHAR(20) NOT NULL UNIQUE,
                       password VARCHAR(30) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE user (
                       created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE content (
+CREATE TABLE content2 (
                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
                          user_id VARCHAR(20) NOT NULL,
                          content TEXT NOT NULL,

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.tobi.announcement.mapper.UserMapper">
+
+    <insert id="createUser" parameterType="com.example.tobi.announcement.model.User">
+        INSERT INTO user(name,phone,userid,password) VALUES (#{name},#{phone},#{userid},#{password});
+    </insert>
+    <select id="loginUser" resultType="com.example.tobi.announcement.model.User" parameterType="com.example.tobi.announcement.model.User">
+        SELECT * from user where userid=#{userid} and password=#{password}
+    </select>
+    <select id="checkUser" resultType="int" parameterType="com.example.tobi.announcement.model.User">
+        SELECT count(*) from user where userid=#{userid} or name=#{name}
+    </select>
+
+</mapper>

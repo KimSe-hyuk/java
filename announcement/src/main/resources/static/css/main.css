@@ -1,0 +1,66 @@
+.navbar {
+    display: flex;
+    /*justify-content: space-between;*/
+    align-items: center;
+    background-color: grey;
+    padding: 8px 12px;
+    width: 100%;
+    height: 10%;
+    list-style: none;
+    justify-content: flex-start;
+}
+.navbar li{
+    margin-left: 30px;
+}
+/* 검색창 컨테이너 스타일 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 30px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 30px;
+    max-width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+.search-container form{
+    width: 80%;
+}
+/* 입력 필드 스타일 */
+.search-input {
+    flex: 1;
+    width: 80%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+/* 검색창에 포커스될 때 스타일 */
+.search-input:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* 버튼 스타일 */
+.search-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    float: right;
+}
+
+/* 버튼 호버 스타일 */
+.search-button:hover {
+    background-color: #0056b3;
+}

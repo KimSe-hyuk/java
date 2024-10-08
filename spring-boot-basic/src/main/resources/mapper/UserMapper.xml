@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.tobi.springbootbasic.mapper.UserMapper">
+
+    <select id="findAll" resultType="com.example.tobi.springbootbasic.model.User">
+        SELECT * from user;
+    </select>
+
+    <select id="findOne" parameterType="long" resultType="com.example.tobi.springbootbasic.model.User">
+        select * from user where id = #{id}
+    </select>
+    <insert id="insertUser" parameterType="com.example.tobi.springbootbasic.model.User">
+        INSERT INTO user(name, email, userid, password) VALUES (#{name},#{email},#{userid},#{password});
+    </insert>
+    <!--<update id="updateUser" parameterType="map">
+        UPDATE user SET name = #{user.name}, userid = #{user.userid} WHERE id = #{id}
+    </update>-->
+    <update id="updateUser" parameterType="com.example.tobi.springbootbasic.model.User">
+        UPDATE
+            user
+        SET
+            name = #{name},
+            email = #{email},
+            userid = #{userid}
+        WHERE
+            id = #{id};
+    </update>
+    <delete id="deleteUser" parameterType="com.example.tobi.springbootbasic.model.User">
+        DELETE from user where userid=#{userid} and password = #{password} and id= #{id}
+    </delete>
+    <select id="checkUserExists" resultType="int" parameterType="com.example.tobi.springbootbasic.model.User">
+        SELECT COUNT(*) FROM user WHERE userid = #{userid} AND password = #{password}
+    </select>
+    <select id="checkPassword" resultType="int" parameterType="String">
+        SELECT COUNT(*) FROM user WHERE password = #{password}
+    </select>
+
+</mapper>

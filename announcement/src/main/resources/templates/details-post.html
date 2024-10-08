@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 폼</title>
+    <style>
+
+        .navbar {
+            display: flex;
+            /*justify-content: space-between;*/
+            align-items: center;
+            background-color: grey;
+            padding: 8px 12px;
+            width: 100%;
+            height: 10%;
+            list-style: none;
+        }
+        .navbar li{
+            margin-left: 30px;
+        }
+    </style>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<ul class="navbar">
+    <li><a href="/post">홈</a> </li>
+    <li><a href="/users/create" class="btn btn-primary">회원가입</a></li>
+    <li><a href="/users/login">로그인</a></li>
+</ul>
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">글정보</h2>
+        <div class="mb-3">
+            <label for="num" class="form-label">글번호</label>
+            <input th:value="${post.id}" type="text" class="form-control" id="num"  readonly>
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input th:value="${post.title}" type="text" class="form-control" id="title"  readonly>
+        </div>
+        <div class="mb-3">
+            <label for="weather" class="form-label">날짜</label>
+            <input th:value="${post.date}" type="text" class="form-control" id="weather"  readonly>
+        </div>
+        <div class="mb-3">
+            <label for="author" class="form-label">작성자</label>
+            <input th:value="${post.author}" type="text" class="form-control" id="author"  readonly>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea id="content" cols="10" rows="10" th:text="${post.content}"></textarea>
+
+        </div>
+
+
+
+</div>
+
+<!-- Bootstrap JS & JavaScript Validation -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

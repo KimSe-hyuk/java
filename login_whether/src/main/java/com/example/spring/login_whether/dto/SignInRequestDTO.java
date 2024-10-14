@@ -1,15 +1,11 @@
-package com.example.SpringBootBasicBoard.dto;
+package com.example.spring.login_whether.dto;
 
-import com.example.SpringBootBasicBoard.model.Member;
-import lombok.Builder;
+import com.example.spring.login_whether.model.Member;
 import lombok.Getter;
-import lombok.ToString;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
 @Getter
-
-public class SignUpRequestDTO {
+public class SignInRequestDTO {
     private String userName;
     private String password;
     private String userId;
@@ -17,8 +13,8 @@ public class SignUpRequestDTO {
     public Member toMember(BCryptPasswordEncoder bCryptPasswordEncoder) {
         return Member.builder()
                 .userId(userId)
-                .password(bCryptPasswordEncoder.encode(password))
                 .userName(userName)
+                .password(bCryptPasswordEncoder.encode(password))
                 .build();
     }
 }

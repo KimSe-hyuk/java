@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+}
+
+aside {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+}
+
+aside ul li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+aside ul li:hover {
+    background-color: #ddd;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+#logout-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.weather-details {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    gap: 10px; /* 항목 간 간격 */
+}
+
+.weather-details p {
+    background-color: #fff; /* 흰색 배경 */
+    border-radius: 5px; /* 둥근 모서리 */
+    padding: 10px; /* 내부 여백 */
+    border: 1px solid #ddd; /* 연한 회색 테두리 */
+    transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+}
+
+.weather-details p:hover {
+    background-color: #e0f7fa; /* 마우스 오버 시 배경색 변경 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.thermometer-container {
+    display: flex;
+    align-items: flex-end; /* 온도계와 온도 텍스트의 정렬을 아래로 맞춤 */
+    margin-top: 20px;
+}
+
+.thermometer {
+    position: relative;
+    width: 50px;
+    height: 200px;
+    background-color: #ddd;
+    border-radius: 25px;
+    margin-right: 10px; /* 온도계와 텍스트 사이의 간격 */
+}
+
+.thermometer-fill {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #ff4500; /* 빨간색 */
+    border-radius: 25px;
+    transition: height 0.5s; /* 부드러운 애니메이션 */
+}
+
+.current-temperature {
+    font-size: 20px; /* 텍스트 크기 조정 */
+    color: #333; /* 텍스트 색상 */
+}

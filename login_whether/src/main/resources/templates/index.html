@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/index.js}"></script>
+    <link th:href="@{/css/index.css}" rel="stylesheet">
+    <title>날씨 정보</title>
+</head>
+<body>
+<header>
+    <h1 th:text="|${userName}님 환영합니다.|" id="welcome-message"></h1>
+    <button   id="logout-button" >로그아웃</button>
+</header>
+<div class="container">
+    <aside>
+        <ul id="provinceList"></ul>
+    </aside>
+    <main>
+        <h2>날씨 정보</h2>
+        <div class="weather-details">
+            <!-- 날씨 정보가 여기에 동적으로 추가됩니다. -->
+        </div>
+        <div class="thermometer-container">
+            <div class="thermometer">
+                <div class="thermometer-fill" id="thermometer-fill"></div>
+            </div>
+            <p id="current-temperature" class="current-temperature">온도: 0℃</p>
+        </div>
+    </main>
+</div>
+</body>
+</html>

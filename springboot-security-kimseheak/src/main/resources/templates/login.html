@@ -1,0 +1,59 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script th:src="@{/js/signIn.js}"></script>
+    <link rel="stylesheet" href="/css/signIn.css">
+    <title>Document</title>
+</head>
+<body>
+<div class="login-container">
+    <h2>로그인</h2>
+    <form id="login-form" method="POST" class="login-form">
+        <div class="input-group">
+            <label for="username">사용자 이름</label>
+            <input type="text" id="username" name="username" placeholder="사용자 이름을 입력하세요" required>
+        </div>
+        <div class="input-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+        </div>
+        <input id="signin" type="submit" class="login-btn" value="로그인">
+        <div class="additional-links">
+            아직 회원이 아니신가요? <a href="/member/join">회원가입</a>
+        </div>
+        <a href="/oauth2/authorization/google" target="_self">Google 로그인</a>
+        <a href="#" id="kakao-login-btn">카카오 로그인</a>
+    </form>
+</div>
+
+<script>
+    // 카카오 SDK 초기화
+    Kakao.init('306fad2bdfd3b5c98b04d336d0fa10b7'); // 여기에 실제 앱 키를 넣으세요.
+
+    $(document).ready(function() {
+        $('#kakao-login-btn').click(function(event) {
+            event.preventDefault(); // 기본 링크 동작을 막음
+
+            // 카카오 로그인 상태 확인
+            if (Kakao.Auth.getAccessToken()) {
+                // 이미 로그인 상태라면 로그아웃 처리 후 로그인 페이지로 리디렉션
+                Kakao.Auth.logout(function() {
+                    console.log('카카오 로그아웃 성공');
+                    // 로그아웃 후 카카오 로그인 페이지로 리디렉션
+                    window.location.href = '/oauth2/authorization/kakao';
+                });
+            } else {
+                // 로그아웃 상태라면 카카오 로그인 페이지로 리디렉션
+                console.log('카카오 로그인 시작');
+                window.location.href = '/oauth2/authorization/kakao';
+            }
+        });
+    });
+</script>
+</body>
+</html>

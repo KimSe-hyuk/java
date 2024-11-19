@@ -52,7 +52,7 @@ public class WeatherService {
                     nx,
                     ny
             );
-            WeatherResponse weatherResponse = objectMapper.readValue(weatherData, WeatherResponse.class);
+                WeatherResponse weatherResponse = objectMapper.readValue(weatherData, WeatherResponse.class);
 
             if(weatherResponse.getResponse().getBody()==null){
                 return WeatherResponseDTO.builder().build();

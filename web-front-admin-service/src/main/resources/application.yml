@@ -1,0 +1,15 @@
+server:
+  port: 8886
+spring:
+  application:
+    name:  web-front-admin-service
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
+
+  rabbitmq:
+    host: ${SPRING_POLAR_RABBITMQ:localhost} #?? rabbit?? ??
+    port: 5672
+    username: user
+    password: 1234
+  resources:
+    static-locations: classpath:/static/

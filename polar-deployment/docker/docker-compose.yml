@@ -1,0 +1,95 @@
+services:
+  # 애플리케이션 서비스
+  catalog-service: 
+    build:
+      context: C:\Users\admin\Desktop\java\catalog-service
+      dockerfile: Dockerfile   
+    depends_on:
+      - polar-mysql
+    image: "catalog-service"
+    container_name: "catalog-service"
+    ports:
+      - 9001:9001
+      - 8001:8001
+      # 도커에 올릴때 필요한것이라 쿠버넌티스에 올릴것이기에 없어도 된다.
+    # environment:
+    #   # 빌드팩 환경 변수 (메모리 계산을 위한 쓰레드 수 설정)
+    #   - BPL_JVM_THREAD_COUNT=50
+    #   # 디버그를 위한 환경 변수 (8001 포트에서 디버그 활성화)
+    #   - BPL_DEBUG_ENABLED=true
+    #   - BPL_DEBUG_PORT=8001
+    #   # - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
+    #   - SPRING_DATASOURCE_URL=jdbc:mysql://polar-mysql:3306/catalog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+    #   - SPRING_PROFILES_ACTIVE=testdata 
+
+  order-service: 
+    build:
+      context: C:\Users\admin\Desktop\java\order-service
+      dockerfile: Dockerfile   
+    depends_on:
+      - polar-mysql
+    image: "order-service"
+    container_name: "order-service"
+    ports:
+      - 9002:9002
+      - 8002:8002
+ 
+
+  edge-service: 
+    build:
+      context: C:\Users\admin\Desktop\java\edge-service
+      dockerfile: Dockerfile   
+    image: "edge-service"
+    container_name: "edge-service"
+    ports:
+      - 9000:9000
+      - 8000:8000
+  hello-service: 
+    build:
+      context: C:\Users\admin\Desktop\java\hello-service
+      dockerfile: Dockerfile   
+    image: "hello-service"
+    container_name: "hello-service"
+    ports:
+      - 7777:7777
+      - 8003:8003
+  web-front-admin-service: 
+    build:
+      context: C:\Users\admin\Desktop\java\web-front-admin-service
+      dockerfile: Dockerfile   
+    image: "web-front-admin-service"
+    container_name: "web-front-admin-service"
+    ports:
+      - 8886:8886
+      - 8004:8004
+  auth-service: 
+    build:
+      context: C:\Users\admin\Desktop\java\auth-service
+      dockerfile: Dockerfile   
+    image: "auth-service"
+    container_name: "auth-service"
+    ports:
+      - 8886:8886
+      - 8005:8005   
+  # MySQL 서비스 (주석 해제) 
+  polar-mysql:
+    image: "mysql:latest"  # 최신 버전으로 업데이트
+    container_name: "polar-mysql"
+    ports:
+      - 3309:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  polar-rabbitmq:
+    image: "rabbitmq:management"
+    container_name: "polar-rabbitmq"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=1234
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf

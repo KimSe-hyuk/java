@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/hello.js}"></script>
+
+</head>
+<body>
+<h1 th:text="${message}"></h1>
+
+
+<form id="orderForm">
+    <label for="isbn">ISBN:</label>
+    <input type="text" id="isbn" name="isbn" value="1234567891" required><br><br>
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" value="3" required><br><br>
+
+
+    <button type="submit">Submit Order</button>
+</form>
+<button id="getOrdersBtn">Get All Orders</button>
+<div id="response1"></div>
+<div id="response"></div>
+
+</body>
+</html>

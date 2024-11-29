@@ -37,6 +37,8 @@ public record Book (
         )
         Double price,
 
+        String publisher,
+
         @CreatedDate
         @Column("created_at")
         Instant createdAt,
@@ -48,5 +50,4 @@ public record Book (
         @Version
         int version
 ) {
-
 }

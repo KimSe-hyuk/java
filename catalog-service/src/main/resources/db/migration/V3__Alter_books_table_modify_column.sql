@@ -1,0 +1,2 @@
+ALTER TABLE book CHANGE COLUMN create_at created_at TIMESTAMP NOT NULL;
+

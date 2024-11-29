@@ -14,36 +14,38 @@ public class BookService {
     }
 
     public Book viewBookDetails(String isbn) {
-        return bookRepository.findById(isbn)
-                .orElseThrow(()-> new BookNotFoundException(isbn));
+        return bookRepository.findByIsbn(isbn)
+                .orElseThrow(() -> new BookNotFoundException(isbn));
     }
 
     public Book addBookToCatalog(Book book) {
-        if(bookRepository.existsById(book.isbn())){
+        if ( bookRepository.existsByIsbn(book.isbn()) ) {
             throw new BookAlreadyExistsException(book.isbn());
         }
         return bookRepository.save(book);
     }
+
     public void removeBookFromCatalog(String isbn) {
         bookRepository.deleteByIsbn(isbn);
     }
 
     public Book editBookDetails(String isbn, Book book) {
-        return bookRepository.findById(isbn)
-                .map(existingBook->{
-                        Book build = Book.builder()
-                                .id(existingBook.id())
-                                .isbn(existingBook.isbn())
-                                .title(book.title())
-                                .author(book.author())
-                                .price(book.price())
-                                .createdAt(existingBook.createdAt())
-                                .lastModifiedAt(existingBook.lastModifiedAt())
-                                .version(existingBook.version())
-                                .build();
-                        return bookRepository.save(build);
-                }).orElseGet(()->addBookToCatalog(book));
-    }
+        return bookRepository.findByIsbn(isbn)
+                .map( existingBook -> {
+                    Book build = Book.builder()
+                            .id(existingBook.id())
+                            .isbn(existingBook.isbn())
+                            .title(book.title())
+                            .author(book.author())
+                            .price(book.price())
+                            .createdAt(existingBook.createdAt())
+                            .lastModifiedAt(existingBook.lastModifiedAt())
+                            .version(existingBook.version())
+                            .build();
+                    return bookRepository.save(build);
+                })
+                .orElseGet(() -> addBookToCatalog(book));
 
+    }
 
 }

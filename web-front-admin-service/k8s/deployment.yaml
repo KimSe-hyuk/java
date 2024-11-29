@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-front-admin-service
+  labels:
+    app: web-front-admin-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-front-admin-service
+  template:
+    metadata:
+      labels:
+        app: web-front-admin-service
+    spec:
+      containers:
+        - name: web-front-admin-service
+          image: web-front-admin-service
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 5" ]
+          ports:
+            - containerPort: 8886
+          env:
+            - name: ADMIN_SERVICE_URL
+              value: http://config-service:8886
+            - name: SPRING_POLAR_RABBITMQ
+              value: polar-rabbitmq
+            - name: SPRING_CLOUD_CONFIG_URI

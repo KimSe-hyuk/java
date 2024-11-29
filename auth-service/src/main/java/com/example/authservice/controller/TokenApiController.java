@@ -1,0 +1,57 @@
+package com.example.authservice.controller;
+
+
+import com.example.authservice.dto.*;
+import com.example.authservice.service.TokenService;
+import com.example.authservice.utils.CookieUtil;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import static com.example.authservice.utils.CookieUtil.getRefreshTokenFromCookies;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/auths")
+public class TokenApiController {
+
+    private final TokenService tokenService;
+
+    @PostMapping("/refresh")
+    public RefreshTokenResponseDTO refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        log.info("Refresh");
+        String refreshToken = getRefreshTokenFromCookies(request.getCookies(),"refreshToken");
+        RefreshTokenResponseDTO refreshTokenResponseDTO = tokenService.refreshToken(refreshToken);
+        if (refreshTokenResponseDTO.getStatus() == 1) {
+
+            CookieUtil.addCookie(response, "refreshToken", refreshTokenResponseDTO.getRefreshToken(), 7 * 24 * 60 * 60);
+            refreshTokenResponseDTO.setRefreshToken(null);
+        }else{
+            CookieUtil.deleteCookie(request,response,"refreshToken");
+        }
+        return refreshTokenResponseDTO;
+    }
+
+    @PostMapping("/validToken")
+    public ValidTokenResponseDTO validToken(@RequestBody ValidTokenRequestDTO validTokenRequestDTO) {
+        log.info("Valid");
+        return tokenService.validToken(validTokenRequestDTO.getToken());
+    }
+
+    @PostMapping("/claims")
+    public ClaimsResponseDTO claims(@RequestBody ClaimsRequestDTO claimsRequestDTO) {
+        log.info("Claims");
+        return tokenService.getAuthentication(claimsRequestDTO.getToken());
+    }
+
+}

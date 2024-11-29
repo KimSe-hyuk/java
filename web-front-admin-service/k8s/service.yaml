@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-front-admin-service
+spec:
+  type: ClusterIP
+  selector:
+    app: web-front-admin-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8886
